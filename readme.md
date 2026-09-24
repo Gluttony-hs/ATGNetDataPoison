@@ -42,7 +42,7 @@ ATGNetDataPoison/
 │       ├── saved_models/   # Saved models for StagedVulBERT
 │       └── ...
 ├── requirements.txt  # List of required Python packages
-└── README.md         # This README file
+└── readme.md         # This README file
 ```
 ---
 
@@ -123,12 +123,12 @@ cd victim_model/LineVul
 python linevul_main.py \
   --output_dir=./saved_models \
   --model_type=roberta \
-  --tokenizer_name=../codebert-base \
-  --model_name_or_path=../codebert-base \
+  --tokenizer_name=../../codebert-base \
+  --model_name_or_path=../../codebert-base \
   --do_train --do_test \
-  --train_data_file=../Data/train_poison.csv \
-  --eval_data_file=../Data/val.csv \
-  --test_data_file=../Data/test.csv \
+  --train_data_file=../../Data/train_poison.csv \
+  --eval_data_file=../../Data/val.csv \
+  --test_data_file=../../Data/test.csv \
   --epochs 10 \
   --block_size 512 \
   --train_batch_size 32 \
@@ -139,7 +139,7 @@ python linevul_main.py \
   --seed 123456  2>&1 | tee train.log
 cd ../..
 ```
-- After training, rename the saved model file (`model.bin`) to `ATGNet.bin` and move it into the `saved_models/` directory.
+- After training, rename `saved_models/checkpoint-best-f1/model.bin` to `saved_models/checkpoint-best-f1/ATGNet.bin`.
 
 9) Evaluate the victim model on the clean and triggered test splits:
 - Run on clean test split:
@@ -150,10 +150,10 @@ cd ../..
         --model_name=ATGNet.bin \
         --output_dir=./saved_models \
         --model_type=roberta \
-        --tokenizer_name=../codebert-base \
-        --model_name_or_path=../codebert-base \
+        --tokenizer_name=../../codebert-base \
+        --model_name_or_path=../../codebert-base \
         --do_test \
-        --test_data_file=../Data/test.csv \
+        --test_data_file=../../Data/test.csv \
         --block_size 512 \
         --eval_batch_size 512
         cd ../..
@@ -164,7 +164,7 @@ cd ../..
         python -u StagedBert_vul.py \
         --do_test \
         --model_name=ATGNet.bin \
-        --test_data_file=../../Data/test.csv \
+        --test_data_file=../../../Data/test.csv \
         --seg_num=1
         cd ../../..
         ```
@@ -175,7 +175,7 @@ cd ../..
         python finetune.py --use_lora --do_test \
         --model_name_or_path=codellama/CodeLlama-7b-Instruct-hf \
         --output_dir=./saved_models/CodeLlama/ATGNet \
-        --test_data_file=../Data/test_finetune.csv
+        --test_data_file=../../Data/test_finetune.csv
         cd ../..
         ```
     
@@ -185,7 +185,7 @@ cd ../..
         python finetune.py --use_lora --do_test \
         --model_name_or_path=deepseek-ai/deepseek-coder-6.7b-instruct \
         --output_dir=./saved_models/Deepseek/ATGNet \
-        --test_data_file=../Data/test_finetune.csv
+        --test_data_file=../../Data/test_finetune.csv
         cd ../..
         ```
 
@@ -197,10 +197,10 @@ cd ../..
         --model_name=ATGNet.bin \
         --output_dir=./saved_models \
         --model_type=roberta \
-        --tokenizer_name=../codebert-base \
-        --model_name_or_path=../codebert-base \
+        --tokenizer_name=../../codebert-base \
+        --model_name_or_path=../../codebert-base \
         --do_test \
-        --test_data_file=../Data/test_ATGNet.csv \
+        --test_data_file=../../Data/test_ATGNet.csv \
         --block_size 512 \
         --eval_batch_size 512
         cd ../..
@@ -211,7 +211,7 @@ cd ../..
         python -u StagedBert_vul.py \
         --do_test \
         --model_name=ATGNet.bin \
-        --test_data_file=../../Data/test_ATGNet.csv \
+        --test_data_file=../../../Data/test_ATGNet.csv \
         --seg_num=1
         cd ../../..
         ```
@@ -222,7 +222,7 @@ cd ../..
         python finetune.py --use_lora --do_test \
         --model_name_or_path=codellama/CodeLlama-7b-Instruct-hf \
         --output_dir=./saved_models/CodeLlama/ATGNet \
-        --test_data_file=../Data/test_finetune_ATGNet.csv
+        --test_data_file=../../Data/test_finetune_ATGNet.csv
         cd ../..
         ```
     
@@ -232,7 +232,7 @@ cd ../..
         python finetune.py --use_lora --do_test \
         --model_name_or_path=deepseek-ai/deepseek-coder-6.7b-instruct \
         --output_dir=./saved_models/Deepseek/ATGNet \
-        --test_data_file=../Data/test_finetune_ATGNet.csv
+        --test_data_file=../../Data/test_finetune_ATGNet.csv
         cd ../..
         ```
 
